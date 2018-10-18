@@ -4,7 +4,7 @@ const Input = (props) => (
     <div>
         <label>
             {props.label}
-            <input type={props.type} value={props.value} onChange={props.onChange}/>
+            <input type={props.type || 'text'} value={props.value} onChange={props.onChange}/>
         </label>
     </div>
 );

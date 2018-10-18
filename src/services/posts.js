@@ -26,7 +26,17 @@ const getAllPosts = function () {
     }
 };
 
-export {getAllPosts};
-export default {getAllPosts};
+
+const getPostWithComments = function (postId) {
+      return axios
+          .get('/post/showPostWithComments/' + postId)
+};
+
+const createComment= function (postId, text) {
+    return axios
+        .post('/comment/' + postId, { text });
+};
 
 
+export {getAllPosts,getPostWithComments, createComment};
+export default {getAllPosts, getPostWithComments, createComment};

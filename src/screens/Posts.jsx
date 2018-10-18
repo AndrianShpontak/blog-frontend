@@ -15,11 +15,13 @@ class Posts extends React.Component {
                     this.props.posts.map(post => (
                         <Post
                             key={post._id}
+                            id={post._id}
                             title={ post.title}
                             body={post.body}
                             description = {post.description}
                             date={post.date}
                             postAuthor={post.postAuthor}
+                            likeDislikes={post.likeDislikes}
                         />
                     ))
                 }
