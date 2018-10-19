@@ -1,7 +1,9 @@
 import React from 'react';
 import Button from "./Button";
-import {createComment, getPostWithComments} from "../services/posts";
+import {createComment, deletePost, getPostWithComments} from "../services/posts";
 import Input from "./Input";
+import postsService from "../services/posts";
+import {connect} from "react-redux";
 
 class Post extends React.Component {
     state = {
@@ -36,11 +38,16 @@ class Post extends React.Component {
             })
     };
 
-    onChangeCommentText = (event) =>{
+    onChangeCommentText = (event) => {
         const value = event.target.value;
 
         this.setState({commentText: value})
 
+    };
+
+    clickDeletePost = () => {
+        deletePost(this.props.id)
+            .then(() => this.props.getAllPosts())
     };
 
     render() {
@@ -48,7 +55,7 @@ class Post extends React.Component {
             props: {
                 postAuthor: {
                     firstName,
-                    lastName,
+                    lastName
                 },
                 title,
                 body,
@@ -59,9 +66,10 @@ class Post extends React.Component {
         } = this;
 
         return (
-            <div>
-                <h2>
+            <div className="post">
+                <h2 className="title">
                     {title}
+                    <span className="btn-delete" onClick={this.clickDeletePost}>X</span>
                 </h2>
                 <p>
                     {body}
@@ -69,18 +77,17 @@ class Post extends React.Component {
                 <p>
                     {description}
                 </p>
-                <span>
-                   {date.substr(0, 10)}
-                </span>
-                <br />
+                <br/>
 
-                <span>by {`${firstName} ${lastName}`}</span>
+                <div className="author-info">
+                    <span>
+                        {likeDislikes} people like it
+                    </span>
+                    <span>by {`${firstName} ${lastName}`} at {date.substr(0, 10)}</span>
+                </div>
+
                 <br/>
-                <span>
-                    {likeDislikes} people like it
-                </span>
-                <br/>
-                <Button buttonText="show comments"  onButtonClick={this.toggleComments}/>
+                <Button buttonText="show comments" onButtonClick={this.toggleComments}/>
                 {
                     this.state.isCommentsOpen && (
                         <div>
@@ -88,7 +95,7 @@ class Post extends React.Component {
                                 this.state.comments.length ? this.state.comments.map(comment => (
                                     <div key={comment._id}>
                                         <span>{`${comment.author.firstName} ${comment.author.lastName}:`}</span>
-                                        <br />
+                                        <br/>
                                         <span>{comment.text}</span>
                                     </div>
                                 )) : <span>no comments yet:(</span>
@@ -96,12 +103,25 @@ class Post extends React.Component {
                         </div>
                     )
                 }
-                <Input value={this.state.commentText} onChange={this.onChangeCommentText}/>
-                <Button onButtonClick={this.addComment} buttonText='Add comment' disabled={!this.state.commentText}/>
 
+                <div className="add-comment">
+                    <Input value={this.state.commentText} onChange={this.onChangeCommentText}/>
+                    <Button onButtonClick={this.addComment} buttonText='Add comment'
+                            disabled={!this.state.commentText}/>
+                </div>
             </div>
-
         )
     }
+}
+
+const mapDispatchToProps = function (dispatch) {
+    return {
+        getAllPosts: function () {
+            return dispatch(postsService.getAllPosts());
+        }
+
+    }
 };
-export default Post
+
+
+export default connect(null, mapDispatchToProps)(Post);

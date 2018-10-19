@@ -1,0 +1,62 @@
+#root {
+    display: flex;
+    justify-content: center;
+}
+
+.app {
+    width: 1024px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.header ul {
+    display: flex;
+    list-style: none;
+}
+
+.header ul li {
+    margin-left: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+}
+
+.input {
+    padding: 8px 0;
+}
+
+.input label {
+    display: flex;
+    flex-direction: column;
+}
+
+.post .author-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post .add-comment {
+    width: 150px;
+}
+
+.post .add-comment button {
+    width: 100%;
+}
+
+.post .title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post .btn-delete {
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+}

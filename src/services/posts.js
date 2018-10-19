@@ -20,7 +20,7 @@ const getAllPosts = function () {
         return axios
             .get('/post/showPostsWithLike')
             .then(function (res) {
-              dispatch(postsAction.setPosts(res.data.data));
+                dispatch(postsAction.setPosts(res.data.data));
             })
             .catch(console.log)
     }
@@ -28,15 +28,24 @@ const getAllPosts = function () {
 
 
 const getPostWithComments = function (postId) {
-      return axios
-          .get('/post/showPostWithComments/' + postId)
-};
-
-const createComment= function (postId, text) {
     return axios
-        .post('/comment/' + postId, { text });
+        .get('/post/showPostWithComments/' + postId)
 };
 
+const createComment = function (postId, text) {
+    return axios
+        .post('/comment/' + postId, {text});
+};
 
-export {getAllPosts,getPostWithComments, createComment};
-export default {getAllPosts, getPostWithComments, createComment};
+const createPost = function (title, body, description) {
+    return axios
+        .post('/post/', {title, body, description})
+};
+
+const deletePost = function (postId) {
+  return axios
+      .delete('/post/' + postId)
+};
+
+export {getAllPosts, getPostWithComments, createComment, createPost, deletePost};
+export default {getAllPosts, getPostWithComments, createComment, createPost, deletePost};
