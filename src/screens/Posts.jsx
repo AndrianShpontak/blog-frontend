@@ -11,9 +11,14 @@ class Posts extends React.Component {
 
 
     render() {
+        const user = this.props.user;
+
         return (
             <div>
-                <AddPost/>
+                {
+                    user ? <AddPost/> : null
+                }
+
                 <div>
                     {
                         this.props.posts.map(post => (
@@ -45,7 +50,8 @@ const mapDispatchToProps = function (dispatch) {
 };
 const mapState = function (store) {
     return {
-        posts: store.posts.posts
+        posts: store.posts.posts,
+        user: store.auth.user
     }
 };
 

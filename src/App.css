@@ -60,3 +60,16 @@
     color: #666;
     cursor: pointer;
 }
+
+.alert {
+    padding: 15px;
+}
+
+.alert-success {
+    background-color: green;
+}
+
+info
+error
+warning
+default

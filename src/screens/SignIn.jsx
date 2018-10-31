@@ -12,6 +12,7 @@ class SignIn extends Component {
 
     onButtonClick = () => {
         this.props.signIn({email: this.state.email, pass: this.state.password})
+            .then(() => this.props.history.push('/'))
     };
 
     onEmailChange = event => {

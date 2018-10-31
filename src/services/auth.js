@@ -2,9 +2,10 @@ import axios from 'axios';
 import authActions from '../actions/auth';
 
 const signIn = user => function (dispatch) {
-    return axios.post('/users/signIn', user).then(function (res) {
-        dispatch(authActions.setUser(res.data));
-    })
+    return axios.post('/users/signIn', user)
+        .then(function (res) {
+            dispatch(authActions.setUser(res.data));
+        })
 };
 
 const signUp = user => function (dispatch) {
@@ -19,6 +20,7 @@ const getCurrentUser = () => dispatch => {
             dispatch(authActions.setUser(res.data));
             dispatch(authActions.setLoadingStatus(true))
         })
+        .catch(() => dispatch(authActions.setUser(null)))
 };
 
 export {signIn, signUp, getCurrentUser};
