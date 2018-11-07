@@ -1,13 +1,14 @@
 const SET_POSTS = 'POSTS/SET_POSTS';
 
 const initialState = {
-    posts:[]
+    posts:[],
+    total:0
 };
 
 const postsReducer = function (state = initialState , action) {
     switch (action.type){
         case SET_POSTS:
-            return {...state, posts: action.posts};
+            return {...state, posts: action.posts, total: action.total};
         default : return state;
     }
 };

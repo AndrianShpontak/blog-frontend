@@ -2,12 +2,30 @@ import React from 'react';
 import postsService from '../services/posts';
 import {connect} from 'react-redux';
 import Post from "../components/Post";
+import Pag from "../components/Pagination";
 import AddPost from "../components/AddPost";
 
 class Posts extends React.Component {
-    componentDidMount() {
-        this.props.getAllPosts();
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            page: 0
+        };
     }
+    componentDidMount() {
+        this.props.getAllPosts({page:0, countPerPage:10});
+    }
+
+    changeContent = (page) => {
+        console.log(page);
+        this.props.getAllPosts({page, countPerPage:10});
+
+        this.setState({
+            page
+        });
+
+    };
 
 
     render() {
@@ -35,6 +53,11 @@ class Posts extends React.Component {
                         ))
                     }
                 </div>
+                <Pag
+                    page={this.state.page}
+                    total={this.props.total}
+                    changeContent={this.changeContent}
+                />
             </div>
         );
     }
@@ -42,8 +65,8 @@ class Posts extends React.Component {
 
 const mapDispatchToProps = function (dispatch) {
     return {
-        getAllPosts: function () {
-            return dispatch(postsService.getAllPosts());
+        getAllPosts: function (params) {
+            return dispatch(postsService.getAllPosts(params))
         }
 
     }
@@ -51,6 +74,7 @@ const mapDispatchToProps = function (dispatch) {
 const mapState = function (store) {
     return {
         posts: store.posts.posts,
+        total: store.posts.total,
         user: store.auth.user
     }
 };

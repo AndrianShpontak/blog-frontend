@@ -9,7 +9,6 @@ import {createBrowserHistory} from 'history';
 import Posts from "./screens/Posts";
 import Header from './components/Header';
 import authService from './services/auth';
-import CommonComponents from "./screens/CommonComponents";
 
 const history = createBrowserHistory();
 
@@ -30,7 +29,6 @@ class App extends Component {
                             <Route path='/signIn' component={SignIn}/>
                             <Route path='/signUp' component={SignUp}/>
                             <Route path='/forgotPass' component={ForgotPassword}/>
-                            <Route path='/common' component={CommonComponents}/>
                         </Switch>
                     </div>
                 </div>

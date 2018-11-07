@@ -15,21 +15,21 @@ router.delete('/:id', postsHandler.deletePost);
 */
 
 
-const getAllPosts = function () {
+const getAllPosts = function ({ page = 0, countPerPage = 10 } = {}) {
     return function (dispatch) {
         return axios
-            .get('/post/showPostsWithLike')
+            .get(`/post/showPostsWithLike?page=${page}&countPerPage=${countPerPage}`)
             .then(function (res) {
-                dispatch(postsAction.setPosts(res.data.data));
+                dispatch(postsAction.setPosts(res.data.data, res.data.total));
             })
             .catch(console.log)
     }
 };
 
 
-const getPostWithComments = function (postId) {
+const getPostWithComments = function ({ postId, page = 0, countPerPage = 3 }) {
     return axios
-        .get('/post/showPostWithComments/' + postId)
+        .get(`/post/showPostWithComments/${postId}?page=${page}&countPerPage=${countPerPage}`)
 };
 
 const createComment = function (postId, text) {

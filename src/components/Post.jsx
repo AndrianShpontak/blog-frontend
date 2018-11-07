@@ -1,4 +1,6 @@
 import React from 'react';
+import InfiniteScroller from 'react-infinite-scroller';
+
 import Button from "./Button";
 import {createComment, deletePost, getPostWithComments} from "../services/posts";
 import Input from "./Input";
@@ -9,12 +11,13 @@ class Post extends React.Component {
     state = {
         isCommentsOpen: false,
         comments: [],
-        commentText: ''
+        commentText: '',
+        hasMore: true
     };
 
     toggleComments = () => {
         if (!this.state.isCommentsOpen) {
-            getPostWithComments(this.props.id)
+            getPostWithComments({postId: this.props.id})
                 .then(res => {
                     this.setState({
                         comments: res.data.data ? res.data.data.comments : [],
@@ -29,7 +32,7 @@ class Post extends React.Component {
 
     addComment = () => {
         createComment(this.props.id, this.state.commentText)
-            .then(() => getPostWithComments(this.props.id))
+            .then(() => getPostWithComments({ postId: this.props.id }))
             .then(res => {
                 this.setState({
                     comments: res.data.data.comments,
@@ -50,8 +53,24 @@ class Post extends React.Component {
             .then(() => this.props.getAllPosts())
     };
 
+    loadMore = (page) => {
+        getPostWithComments({
+            postId: this.props.id,
+            page: page,
+            perPage: 3
+        })
+            .then(post => {
+                console.log(post)
+                this.setState((prev) => ({
+                    comments: [...prev.comments, ...post.data.data.comments],
+                    hasMore: post.data.data.comments.length === 3
+                }));
+            });
+    };
+
     render() {
         const {
+            loadMore,
             props: {
                 postAuthor: {
                     firstName,
@@ -62,6 +81,9 @@ class Post extends React.Component {
                 description,
                 date,
                 likeDislikes
+            },
+            state: {
+                hasMore
             }
         } = this;
 
@@ -90,16 +112,23 @@ class Post extends React.Component {
                 <Button buttonText="show comments" onButtonClick={this.toggleComments}/>
                 {
                     this.state.isCommentsOpen && (
-                        <div>
-                            {
-                                this.state.comments.length ? this.state.comments.map(comment => (
-                                    <div key={comment._id}>
-                                        <span>{`${comment.author.firstName} ${comment.author.lastName}:`}</span>
-                                        <br/>
-                                        <span>{comment.text}</span>
-                                    </div>
-                                )) : <span>no comments yet:(</span>
-                            }
+                        <div style={{ height: 100, overflow: 'auto' }}>
+                            <InfiniteScroller
+                                pageStart={0}
+                                hasMore={hasMore}
+                                loadMore={loadMore}
+                                loader={<div key="loader">loading...</div>}
+                            >
+                                {
+                                    this.state.comments.length ? this.state.comments.map(comment => (
+                                        <div key={comment._id}>
+                                            <span>{`${comment.author.firstName} ${comment.author.lastName}:`}</span>
+                                            <br/>
+                                            <span>{comment.text}</span>
+                                        </div>
+                                    )) : <span>no comments yet:(</span>
+                                }
+                            </InfiniteScroller>
                         </div>
                     )
                 }
@@ -116,8 +145,8 @@ class Post extends React.Component {
 
 const mapDispatchToProps = function (dispatch) {
     return {
-        getAllPosts: function () {
-            return dispatch(postsService.getAllPosts());
+        getAllPosts: function (params) {
+            return dispatch(postsService.getAllPosts(params));
         }
 
     }

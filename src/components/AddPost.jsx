@@ -42,7 +42,7 @@ class AddPost extends React.Component {
                     body: '',
                     description: ''
                 })
-            });
+            })
     };
 
     render() {
@@ -58,10 +58,11 @@ class AddPost extends React.Component {
         )
     }
 };
+
 const mapDispatchToProps = function (dispatch) {
     return {
-        getAllPosts: function () {
-            return dispatch(postsService.getAllPosts());
+        getAllPosts: function (params) {
+            return dispatch(postsService.getAllPosts(params));
         }
 
     }

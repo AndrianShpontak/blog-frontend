@@ -1,8 +1,8 @@
 import {SET_POSTS} from '../reducers/posts';
 import {SET_LOADING_STATUS} from "../reducers/auth";
 
-const setPosts = function (posts) {
-   return {type: SET_POSTS, posts};
+const setPosts = function (posts, total) {
+   return {type: SET_POSTS, posts, total};
 };
 
 const setLoadingStatus = function (loadingStatus) {
