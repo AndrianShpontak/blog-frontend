@@ -6,6 +6,7 @@ import {createComment, deleteComment, deletePost, getPostWithComments} from "../
 import Input from "./Input";
 import postsService from "../services/posts";
 import {connect} from "react-redux";
+import LikeDislike from './likeDislike';
 
 class Post extends React.Component {
     state = {
@@ -115,6 +116,8 @@ class Post extends React.Component {
                 </p>
                 <br/>
 
+
+                <br/>
                 <div className="author-info">
                     <span>
                         {likeDislikes} people like it
