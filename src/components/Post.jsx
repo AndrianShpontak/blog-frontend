@@ -2,7 +2,7 @@ import React from 'react';
 import InfiniteScroller from 'react-infinite-scroller';
 
 import Button from "./Button";
-import {createComment, deletePost, getPostWithComments} from "../services/posts";
+import {createComment, deleteComment, deletePost, getPostWithComments} from "../services/posts";
 import Input from "./Input";
 import postsService from "../services/posts";
 import {connect} from "react-redux";
@@ -17,16 +17,19 @@ class Post extends React.Component {
 
     toggleComments = () => {
         if (!this.state.isCommentsOpen) {
-            getPostWithComments({postId: this.props.id})
+            return getPostWithComments({postId: this.props.id})
                 .then(res => {
                     this.setState({
                         comments: res.data.data ? res.data.data.comments : [],
-                        isCommentsOpen: true
+                        isCommentsOpen: true,
+                        hasMore: res.data.data.comments.length === 5
                     })
                 })
         }
+
         this.setState({
-            isCommentsOpen: false
+            isCommentsOpen: false,
+            comments:[]
         })
     };
 
@@ -53,19 +56,30 @@ class Post extends React.Component {
             .then(() => this.props.getAllPosts())
     };
 
+    clickDeleteComment = (id) => {
+        deleteComment(id )
+            .then(() => postsService.getPostWithComments({ postId: this.props.id }))
+            .then(res => {
+                this.setState({
+                    comments: res.data.data ? res.data.data.comments : [],
+
+                })
+            })
+    };
+
     loadMore = (page) => {
         getPostWithComments({
             postId: this.props.id,
             page: page,
-            perPage: 3
+            perPage: 5
         })
             .then(post => {
-                console.log(post)
                 this.setState((prev) => ({
                     comments: [...prev.comments, ...post.data.data.comments],
-                    hasMore: post.data.data.comments.length === 3
+                    hasMore: post.data.data.comments.length === 5
                 }));
             });
+
     };
 
     render() {
@@ -112,19 +126,24 @@ class Post extends React.Component {
                 <Button buttonText="show comments" onButtonClick={this.toggleComments}/>
                 {
                     this.state.isCommentsOpen && (
-                        <div style={{ height: 100, overflow: 'auto' }}>
+                        <div style={{ height: 300, overflow: 'auto' }}>
                             <InfiniteScroller
                                 pageStart={0}
                                 hasMore={hasMore}
                                 loadMore={loadMore}
                                 loader={<div key="loader">loading...</div>}
+                                threshold={50}
+                                useWindow={false}
                             >
                                 {
                                     this.state.comments.length ? this.state.comments.map(comment => (
-                                        <div key={comment._id}>
+                                        <div key={comment._id} style={{ height: 50 }}>
                                             <span>{`${comment.author.firstName} ${comment.author.lastName}:`}</span>
                                             <br/>
-                                            <span>{comment.text}</span>
+                                            <div className="delete-comment">
+                                              <span>{comment.text}</span>
+                                              <span className="btn-delete" onClick={() => this.clickDeleteComment(comment._id)} >X</span>
+                                            </div>
                                         </div>
                                     )) : <span>no comments yet:(</span>
                                 }
@@ -148,7 +167,6 @@ const mapDispatchToProps = function (dispatch) {
         getAllPosts: function (params) {
             return dispatch(postsService.getAllPosts(params));
         }
-
     }
 };
 

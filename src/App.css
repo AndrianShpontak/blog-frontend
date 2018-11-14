@@ -68,3 +68,7 @@
 .alert-success {
     background-color: green;
 }
+.post .delete-comment{
+    display: flex;
+    justify-content: space-between;
+}

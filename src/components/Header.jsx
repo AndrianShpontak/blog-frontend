@@ -23,6 +23,7 @@ const Header = function (props) {
                         <li>
                             <Link to='/signUp'>Sign Up </Link>
                         </li>
+
                     </ul>
                 )
             }
