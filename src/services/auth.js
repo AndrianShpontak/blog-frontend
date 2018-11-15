@@ -15,12 +15,13 @@ const signUp = user => function (dispatch) {
     })
 };
 
-const logout = user => function (dispatch) {
-    return axios.post('users/logout', user)
-        .then(function (res) {
-            dispatch(authActions.setUser(res.data))
+const logOut = () => function (dispatch) {
+    return axios.post('/users/logout')
+        .then(function () {
+            dispatch(authActions.setUser(null))
         })
 };
+
 
 const getCurrentUser = () => dispatch => {
     return axios.get('/users/currentUser')
@@ -31,6 +32,6 @@ const getCurrentUser = () => dispatch => {
         .catch(() => dispatch(authActions.setUser(null)))
 };
 
-export {signIn, signUp, getCurrentUser, logout};
-export default {signIn, signUp, getCurrentUser, logout};
+export {signIn, signUp, getCurrentUser, logOut};
+export default {signIn, signUp, getCurrentUser, logOut};
 

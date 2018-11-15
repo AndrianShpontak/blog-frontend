@@ -18,6 +18,7 @@ class App extends Component {
         this.props.getCurrentUser();
     }
 
+
     render() {
         return (
             <Router history={history}>

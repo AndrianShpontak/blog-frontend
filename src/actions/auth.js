@@ -10,5 +10,6 @@ const setLoadingStatus = function (status) {
     };
 };
 
+
 export {setUser, setLoadingStatus};
 export default {setUser, setLoadingStatus};

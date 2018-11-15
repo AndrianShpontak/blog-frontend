@@ -62,10 +62,25 @@ const toggleLike = function (postId) {
         .post('/likeDislike/' + postId);
 };
 
-const logOut = function () {
-    return axios
-        .post('/logout');
-};
+export {
+    getAllPosts,
+    getPostWithComments,
+    createComment,
+    createPost,
+    deletePost,
+    deleteComment,
+    toggleLike,
+    getAllComments,
 
-export {getAllPosts, getPostWithComments, createComment, createPost, deletePost, deleteComment, toggleLike, getAllComments,logOut};
-export default {getAllPosts, getPostWithComments, createComment, createPost, deletePost, deleteComment, toggleLike, getAllComments,logOut};
+};
+export default {
+    getAllPosts,
+    getPostWithComments,
+    createComment,
+    createPost,
+    deletePost,
+    deleteComment,
+    toggleLike,
+    getAllComments,
+
+};
