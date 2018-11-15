@@ -48,7 +48,7 @@ class Posts extends React.Component {
                                 description = {post.description}
                                 date={post.date}
                                 postAuthor={post.postAuthor}
-                                likeDislikes={post.likeDislikes}
+                                likeDislike={post.likeDislike}
                             />
                         ))
                     }

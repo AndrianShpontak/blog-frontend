@@ -57,6 +57,15 @@ const deleteComment = function (commentId) {
         .delete('/comment/' + commentId)
 };
 
+const toggleLike = function (postId) {
+    return axios
+        .post('/likeDislike/' + postId);
+};
 
-export {getAllPosts, getPostWithComments, createComment, createPost, deletePost, deleteComment, getAllComments};
-export default {getAllPosts, getPostWithComments, createComment, createPost, deletePost, deleteComment, getAllComments};
+const logOut = function () {
+    return axios
+        .post('/logout');
+};
+
+export {getAllPosts, getPostWithComments, createComment, createPost, deletePost, deleteComment, toggleLike, getAllComments,logOut};
+export default {getAllPosts, getPostWithComments, createComment, createPost, deletePost, deleteComment, toggleLike, getAllComments,logOut};

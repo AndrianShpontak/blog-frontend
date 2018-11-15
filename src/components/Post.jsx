@@ -2,11 +2,11 @@ import React from 'react';
 import InfiniteScroller from 'react-infinite-scroller';
 
 import Button from "./Button";
-import {createComment, deleteComment, deletePost, getPostWithComments} from "../services/posts";
+import {createComment, deleteComment, deletePost, getPostWithComments, toggleLike} from "../services/posts";
 import Input from "./Input";
 import postsService from "../services/posts";
 import {connect} from "react-redux";
-import LikeDislike from './likeDislike';
+import LikeDislike from './LikeDislike';
 
 class Post extends React.Component {
     state = {
@@ -67,6 +67,10 @@ class Post extends React.Component {
                 })
             })
     };
+    /*clickLogOut = () => {
+        logOut()
+            .then(() => this.props.logout())
+    };*/
 
     loadMore = (page) => {
         getPostWithComments({
@@ -83,9 +87,14 @@ class Post extends React.Component {
 
     };
 
+    toggleLike = () => {
+        postsService.toggleLike(this.props.id);
+    };
+
     render() {
         const {
             loadMore,
+            toggleLike,
             props: {
                 postAuthor: {
                     firstName,
@@ -95,7 +104,7 @@ class Post extends React.Component {
                 body,
                 description,
                 date,
-                likeDislikes
+                likeDislike
             },
             state: {
                 hasMore
@@ -116,12 +125,9 @@ class Post extends React.Component {
                 </p>
                 <br/>
 
-
                 <br/>
                 <div className="author-info">
-                    <span>
-                        {likeDislikes} people like it
-                    </span>
+                    <LikeDislike likes={likeDislike} onLike={toggleLike} />
                     <span>by {`${firstName} ${lastName}`} at {date.substr(0, 10)}</span>
                 </div>
 

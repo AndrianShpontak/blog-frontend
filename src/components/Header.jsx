@@ -14,7 +14,10 @@ const Header = function (props) {
                 user ? (
                     <div>
                         {user.firstName + ' ' + user.lastName}
+                        <br/>
+                        <button className='logout' onClick={this.clickLogOut}>LogOut</button>
                     </div>
+
                 ) : (
                     <ul>
                         <li>
@@ -23,6 +26,7 @@ const Header = function (props) {
                         <li>
                             <Link to='/signUp'>Sign Up </Link>
                         </li>
+
 
                     </ul>
                 )
