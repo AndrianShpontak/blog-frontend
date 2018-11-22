@@ -2,35 +2,25 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import authService from "../services/auth";
-
-
+import RegisterCard from "./RegisterCard";
 
 const Header = function (props) {
     const user = props.user;
     return (
         <nav className="header">
-            <Link to="/">Home</Link>
             {
                 user ? (
                     <div>
+                        <Link to="/">Home</Link>
+
                         {user.firstName + ' ' + user.lastName}
                         <br/>
                         <button className='logout' onClick={props.logOut}>LogOut</button>
                     </div>
 
                 ) : (
-                    <ul>
-                        <li>
-                            <Link to="/signIn">Sign In</Link>
-                        </li>
-                        <li>
-                            <Link to='/signUp'>Sign Up </Link>
-                        </li>
-
-
-                    </ul>
-                )
-            }
+                   <RegisterCard user={user}/>
+                )}
 
         </nav>
     )

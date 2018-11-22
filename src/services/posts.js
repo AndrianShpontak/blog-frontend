@@ -62,6 +62,11 @@ const toggleLike = function (postId) {
         .post('/likeDislike/' + postId);
 };
 
+const toggleSubscribe = function (authorId) {
+    return axios
+        .post('/subscription/' + authorId)
+};
+
 export {
     getAllPosts,
     getPostWithComments,
@@ -71,6 +76,7 @@ export {
     deleteComment,
     toggleLike,
     getAllComments,
+    toggleSubscribe
 
 };
 export default {
@@ -82,5 +88,6 @@ export default {
     deleteComment,
     toggleLike,
     getAllComments,
+    toggleSubscribe
 
 };

@@ -10,7 +10,8 @@ class Posts extends React.Component {
         super(props);
 
         this.state = {
-            page: 0
+            page: 0,
+            isAddPostOpen: false
         };
     }
     componentDidMount() {
@@ -27,14 +28,18 @@ class Posts extends React.Component {
 
     };
 
+    toggleIsOpenAddPost = () => this.setState(prev => ({ isAddPostOpen: !prev.isAddPostOpen }));
+
 
     render() {
         const user = this.props.user;
 
         return (
             <div>
+                <button onClick={this.toggleIsOpenAddPost}>Toggle AddPost</button>
+
                 {
-                    user ? <AddPost/> : null
+                    user && this.state.isAddPostOpen ? <AddPost/> : null
                 }
 
                 <div>

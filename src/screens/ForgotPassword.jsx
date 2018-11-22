@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import authService from '../services/auth';
+import {connect} from 'react-redux';
 
 class ForgotPassword extends Component {
     state = {
         email: ''
+    };
+
+    onButtonClick = () =>{
+        this.props.onForgotClick();
+        this.props.forgotPassword(this.state.email)
     };
 
     onEmailChange = event => {
@@ -16,9 +23,19 @@ class ForgotPassword extends Component {
         return (
             <div>
                 <Input label='Email' value={this.state.email} onChange={this.onEmailChange}/>
-                <Button buttonText = 'Forgot password'/>
+                <Button  buttonText='Forgot password' onButtonClick={this.onButtonClick} />
             </div>
         )
+    }
 }
-}
-export default ForgotPassword;
+
+const mapDispatchToProps = function (dispatch) {
+    return {
+        forgotPassword: function (email) {
+            return dispatch(authService.forgotPassword(email));
+        }
+
+    }
+};
+
+export default connect(null, mapDispatchToProps)(ForgotPassword);

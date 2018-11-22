@@ -1,9 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import InfiniteScroller from 'react-infinite-scroller';
 
 import Button from "./Button";
 import {createComment, deleteComment, deletePost, getPostWithComments} from "../services/posts";
-import Input from "./Input";
 import postsService from "../services/posts";
 import {connect} from "react-redux";
 import LikeDislike from './LikeDislike';
@@ -95,13 +95,14 @@ class Post extends React.Component {
             props: {
                 postAuthor: {
                     firstName,
-                    lastName
+                    lastName,
+                    _id
                 },
                 title,
                 body,
                 description,
                 date,
-                likeDislike
+                likeDislike,
             },
             state: {
                 hasMore
@@ -109,7 +110,7 @@ class Post extends React.Component {
         } = this;
 
         return (
-            <div className="post">
+            <div className="userProfile">
                 <h2 className="title">
                     {title}
                     <span className="btn-delete" onClick={this.clickDeletePost}>X</span>
@@ -125,9 +126,12 @@ class Post extends React.Component {
                 <br/>
                 <div className="author-info">
                     <LikeDislike likes={likeDislike} onLike={toggleLike} />
-                    <span>by {`${firstName} ${lastName}`} at {date.substr(0, 10)}</span>
+                     <Link to={'/users/' + _id} >
+                         <span>by {`${firstName} ${lastName}`} at {date.substr(0, 10)}</span>
+                     </Link>
                 </div>
 
+                <br/>
                 <br/>
                 <Button buttonText="show comments" onButtonClick={this.toggleComments}/>
                 {
@@ -157,13 +161,7 @@ class Post extends React.Component {
                         </div>
                     )
                 }
-
-                <div className="add-comment">
-                    <Input value={this.state.commentText} onChange={this.onChangeCommentText}/>
-                    <Button onButtonClick={this.addComment} buttonText='Add comment'
-                            disabled={!this.state.commentText}/>
                 </div>
-            </div>
         )
     }
 }
