@@ -8,7 +8,6 @@ class Likes extends React.Component {
             likes: props.likes,
             isUserLiked: props.likes.some(like => like.userId === props.user._id)
         };
-
     }
 
     updateLikes = () => {

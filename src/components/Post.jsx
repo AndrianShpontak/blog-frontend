@@ -4,6 +4,7 @@ import InfiniteScroller from 'react-infinite-scroller';
 
 import Button from "./Button";
 import {createComment, deleteComment, deletePost, getPostWithComments} from "../services/posts";
+import Input from "./Input";
 import postsService from "../services/posts";
 import {connect} from "react-redux";
 import LikeDislike from './LikeDislike';
@@ -68,7 +69,6 @@ class Post extends React.Component {
             })
     };
 
-
     loadMore = (page) => {
         getPostWithComments({
             postId: this.props.id,
@@ -103,6 +103,7 @@ class Post extends React.Component {
                 description,
                 date,
                 likeDislike,
+                showAddComments
             },
             state: {
                 hasMore
@@ -110,7 +111,7 @@ class Post extends React.Component {
         } = this;
 
         return (
-            <div className="userProfile">
+            <div className="UserProfile">
                 <h2 className="title">
                     {title}
                     <span className="btn-delete" onClick={this.clickDeletePost}>X</span>
@@ -142,7 +143,7 @@ class Post extends React.Component {
                                 hasMore={hasMore}
                                 loadMore={loadMore}
                                 loader={<div key="loader">loading...</div>}
-                                threshold={50}
+                                threshold={0}
                                 useWindow={false}
                             >
                                 {
@@ -161,7 +162,15 @@ class Post extends React.Component {
                         </div>
                     )
                 }
-                </div>
+
+                {showAddComments &&
+                    <div className="add-comment">
+                        <Input value={this.state.commentText} onChange={this.onChangeCommentText}/>
+                        <Button onButtonClick={this.addComment} buttonText='Add comment'
+                                disabled={!this.state.commentText}/>
+                    </div>
+                }
+            </div>
         )
     }
 }

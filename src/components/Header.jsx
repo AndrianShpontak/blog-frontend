@@ -4,35 +4,48 @@ import {connect} from 'react-redux';
 import authService from "../services/auth";
 import RegisterCard from "./RegisterCard";
 
-const Header = function (props) {
-    const user = props.user;
-    return (
-        <nav className="header">
-            {
-                user ? (
-                    <div>
-                        <Link to="/">Home</Link>
+class Header extends React.Component {
+    state = {
+        isUsersShow: false
+    };
 
-                        {user.firstName + ' ' + user.lastName}
-                        <br/>
-                        <button className='logout' onClick={props.logOut}>LogOut</button>
-                    </div>
+    render() {
+        const user = this.props.user;
 
-                ) : (
-                   <RegisterCard user={user}/>
-                )}
+        return (
+            <nav className="">
+                {
+                    user ? (
+                        <ul className="nav">
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/">Home</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/users">Users</Link>
+                            </li>
+                            <li className="nav-item">
+                                <button className="btn btn-outline-danger" onClick={this.props.logOut}>LogOut</button>
+                            </li>
+                            <span>{user.firstName + ' ' + user.lastName}</span>
+                        </ul>
+                    ) : (
+                        <RegisterCard user={user}/>
+                    )}
 
-        </nav>
-    )
-};
+            </nav>
+        );
+    }
+}
 
-const mapDispatchToProps =function (dispatch) {
-    return{
-        logOut:function () {
+
+const mapDispatchToProps = function (dispatch) {
+    return {
+        logOut: function () {
             return dispatch(authService.logOut())
         }
     }
 };
+
 
 const mapState = function (store) {
     return {

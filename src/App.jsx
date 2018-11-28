@@ -10,6 +10,7 @@ import Posts from "./screens/Posts";
 import Header from './components/Header';
 import authService from './services/auth';
 import UserProfile from "./screens/UserProfile";
+import GetAllUsers from "./screens/GetAllUsers";
 
 import {withRouter} from 'react-router-dom'
 
@@ -39,6 +40,7 @@ class App extends Component {
                             <Route path='/signIn' component={SignIn}/>
                             <Route path='/signUp' component={SignUp}/>
                             <Route path='/forgotPass' component={ForgotPassword}/>
+                            <Route path='/users/' component={GetAllUsers} exact/>
                             <Route path='/users/:id' component={UserProfile}/>
 
                             {/*// route path = '/users/:id' component UserProfile

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Input from '../components/Input';
 import Button from '../components/Button';
 import authService from '../services/auth';
 import {connect} from 'react-redux';
@@ -18,7 +17,6 @@ class SignIn extends Component {
             .catch((error) => {
                 console.log(error)
             })
-
     };
 
     onEmailChange = event => {
@@ -40,18 +38,33 @@ class SignIn extends Component {
     render() {
         const {forgotClick} = this.state;
         return forgotClick ? (<ForgotPassword onForgotClick={()=>this.onForgotPasswordClick(false)}/>) : (
-            <div>
-                <Input label='Email' value={this.state.email} onChange={this.onEmailChange}/>
-                <Input
-                    label='Password'
-                    type='password'
-                    value={this.state.password}
-                    onChange={this.onPasswordChange}
-                />
-                <Button buttonText='Sign In' onButtonClick={this.onButtonClick}/>
+            <form>
+                <div className='form-group'>
+                    <label htmlFor="exampleInputEmail1">Email address</label>
+                      <input type="email"
+                             className="form-control"
+                             id="exampleInputEmail1"
+                             aria-describedby="emailHelp"
+                             placeholder="Enter email"
+                             value={this.state.email}
+                             onChange={this.onEmailChange}/>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="exampleInputPassword1">Password</label>
+
+                       <input type="password"
+                              className={"form-control"}
+                              id="exampleInputPassword1"
+                              placeholder="Password"
+                              value={this.state.password}
+                              onChange={this.onPasswordChange}
+                        />
+                </div>
+                <Button type="submit" class="btn btn-primary" buttonText='Sign In' onButtonClick={this.onButtonClick}/>
                 <br/>
                 <Button buttonText='Forgot password' onButtonClick={() => this.onForgotPasswordClick(true)}/>
-            </div>
+            </form>
         )
     }
 }

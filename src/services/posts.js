@@ -37,6 +37,7 @@ const createComment = function (postId, text) {
         .post('/comment/' + postId, {text});
 };
 
+
 const getAllComments = function () {
     return axios
         .get('/comment/')
@@ -67,6 +68,11 @@ const toggleSubscribe = function (authorId) {
         .post('/subscription/' + authorId)
 };
 
+const getPostsByUserWithLikesAndComments = function ({userId, page = 0, countPerPage = 10} = {}) {
+    return axios
+        .get(`/post/showPostByUserWithComAndLikes/${userId}?page=${page}&countPerPage=${countPerPage}`)
+        .then(res => res.data.data)
+};
 export {
     getAllPosts,
     getPostWithComments,
@@ -76,7 +82,8 @@ export {
     deleteComment,
     toggleLike,
     getAllComments,
-    toggleSubscribe
+    toggleSubscribe,
+    getPostsByUserWithLikesAndComments
 
 };
 export default {
@@ -88,6 +95,7 @@ export default {
     deleteComment,
     toggleLike,
     getAllComments,
-    toggleSubscribe
+    toggleSubscribe,
+    getPostsByUserWithLikesAndComments
 
 };

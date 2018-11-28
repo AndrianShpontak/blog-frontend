@@ -52,7 +52,7 @@ class Posts extends React.Component {
                                 body={post.body}
                                 description = {post.description}
                                 date={post.date}
-                                postAuthor={post.postAuthor}
+                                postAuthor={post.user}
                                 likeDislike={post.likeDislike}
                             />
                         ))
