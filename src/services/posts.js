@@ -20,6 +20,8 @@ const getAllPosts = function ({page = 0, countPerPage = 10} = {}) {
         return axios
             .get(`/post/showPostsWithLike?page=${page}&countPerPage=${countPerPage}`)
             .then(function (res) {
+                console.log(res);
+                if(!res) return;
                 dispatch(postsAction.setPosts(res.data.data, res.data.total));
             })
             .catch(console.log)

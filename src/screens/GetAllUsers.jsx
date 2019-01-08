@@ -1,5 +1,7 @@
 import React from 'react';
 import usersService from "../services/users";
+import {deleteUser} from "../services/users";
+
 
 class GetAllUsers extends React.Component {
     constructor(props) {
@@ -17,6 +19,10 @@ class GetAllUsers extends React.Component {
             .then(res => this.setState({isLoading: false, data: res.data.data}));
     }
 
+    clickDeleteUser = () => {
+        deleteUser(this.props.id)
+            .then(() => this.props.getAllUsers())
+    };
 
     render() {
         if (this.state.isLoading) {
@@ -32,6 +38,7 @@ class GetAllUsers extends React.Component {
                                     <a href={`/users/${user._id}`}>
                                         {user.firstName + ' ' + user.lastName}
                                     </a>
+                                    <span className="btn-delete" onClick={this.clickDeleteUser}>X</span>
                                 </li>
                             )
                         )

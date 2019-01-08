@@ -31,7 +31,10 @@ class Likes extends React.Component {
     render(){
         return(
             <div>
-                <button onClick={this.updateLikes}>Like</button>
+                <div>
+                <img src="../../like.png"  alt='' />
+                <button className="btn btn-light" onClick={this.updateLikes}>Like</button>
+                </div>
                 <p>{this.state.likes.length} people like it</p>
             </div>
         );

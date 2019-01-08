@@ -4,6 +4,7 @@ import postsService from '../services/posts';
 import connect from "react-redux/es/connect/connect";
 import Post from "../components/Post";
 import Pag from "../components/Pagination";
+import Button from "../components/Button";
 
 const ROLES = {
     1: 'admin',
@@ -70,6 +71,8 @@ class UserProfile extends Component {
 
         const canSubscribe = user.role === '3' && currentUser._id !== user._id;
 
+        const canChangeUserInformation = user.role === "1" && user.role === "2" && currentUser._id === user._id;
+
 
         return (
             <div className='user-profile'>
@@ -85,7 +88,10 @@ class UserProfile extends Component {
                         <h5>{ROLES[user.role]}</h5>
                     </div>
 
-                    {/*   button updateInformAboutUser*/}
+                    {canChangeUserInformation && (
+                        <Button className='btn btn-primary btn-sm' buttonText='Change information' onClick=''/>
+
+                    )}
 
                     {
                         canSubscribe && (

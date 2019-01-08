@@ -17,16 +17,26 @@ class Post extends React.Component {
         hasMore: true
     };
 
+    onKeyUp = event => {
+        if (event.keyCode === 13) {
+            this.addComment();
+        }
+    };
+
+    loadComments = () => {
+        return getPostWithComments({postId: this.props.id})
+            .then(res => {
+                this.setState({
+                    comments: res.data.data ? res.data.data.comments : [],
+                    isCommentsOpen: true,
+                    hasMore: res.data.data.comments.length >= 5
+                })
+            })
+    };
+
     toggleComments = () => {
         if (!this.state.isCommentsOpen) {
-            return getPostWithComments({postId: this.props.id})
-                .then(res => {
-                    this.setState({
-                        comments: res.data.data ? res.data.data.comments : [],
-                        isCommentsOpen: true,
-                        hasMore: res.data.data.comments.length === 5
-                    })
-                })
+            return this.loadComments();
         }
 
         this.setState({
@@ -37,12 +47,9 @@ class Post extends React.Component {
 
     addComment = () => {
         createComment(this.props.id, this.state.commentText)
-            .then(() => getPostWithComments({ postId: this.props.id }))
-            .then(res => {
-                this.setState({
-                    comments: res.data.data.comments,
-                    commentText: ''
-                })
+            .then(() => {
+                this.loadComments();
+                this.setState({ commentText: '' })
             })
     };
 
@@ -93,11 +100,7 @@ class Post extends React.Component {
             loadMore,
             toggleLike,
             props: {
-                postAuthor: {
-                    firstName,
-                    lastName,
-                    _id
-                },
+                postAuthor: pa,
                 title,
                 body,
                 description,
@@ -127,14 +130,18 @@ class Post extends React.Component {
                 <br/>
                 <div className="author-info">
                     <LikeDislike likes={likeDislike} onLike={toggleLike} />
-                     <Link to={'/users/' + _id} >
-                         <span>by {`${firstName} ${lastName}`} at {date.substr(0, 10)}</span>
-                     </Link>
+                    {
+                        pa
+                            ? <Link to={'/users/' + pa._id} >
+                                <span>by {`${pa.firstName} ${pa.lastName}`} at {date.substr(0, 10)}</span>
+                              </Link>
+                            : null
+                    }
                 </div>
 
                 <br/>
                 <br/>
-                <Button buttonText="show comments" onButtonClick={this.toggleComments}/>
+                <Button buttonText="show comments" className="btn btn-info btn-lg btn-block btn-sm" onButtonClick={this.toggleComments}/>
                 {
                     this.state.isCommentsOpen && (
                         <div style={{ height: 300, overflow: 'auto' }}>
@@ -143,7 +150,7 @@ class Post extends React.Component {
                                 hasMore={hasMore}
                                 loadMore={loadMore}
                                 loader={<div key="loader">loading...</div>}
-                                threshold={0}
+                                threshold={50}
                                 useWindow={false}
                             >
                                 {
@@ -163,13 +170,17 @@ class Post extends React.Component {
                     )
                 }
 
-                {showAddComments &&
+                { showAddComments }
                     <div className="add-comment">
-                        <Input value={this.state.commentText} onChange={this.onChangeCommentText}/>
+                        <Input
+                            value={this.state.commentText}
+                            onChange={this.onChangeCommentText}
+                            onKeyUp={this.onKeyUp}
+                         />
                         <Button onButtonClick={this.addComment} buttonText='Add comment'
                                 disabled={!this.state.commentText}/>
                     </div>
-                }
+
             </div>
         )
     }

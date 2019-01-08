@@ -40,7 +40,7 @@ class SignIn extends Component {
         return forgotClick ? (<ForgotPassword onForgotClick={()=>this.onForgotPasswordClick(false)}/>) : (
             <form>
                 <div className='form-group'>
-                    <label htmlFor="exampleInputEmail1">Email address</label>
+                    <label htmlFor="InputEmail">Email address</label>
                       <input type="email"
                              className="form-control"
                              id="exampleInputEmail1"
@@ -51,7 +51,7 @@ class SignIn extends Component {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
+                    <label htmlFor="InputPassword">Password</label>
 
                        <input type="password"
                               className={"form-control"}
@@ -61,9 +61,9 @@ class SignIn extends Component {
                               onChange={this.onPasswordChange}
                         />
                 </div>
-                <Button type="submit" class="btn btn-primary" buttonText='Sign In' onButtonClick={this.onButtonClick}/>
-                <br/>
-                <Button buttonText='Forgot password' onButtonClick={() => this.onForgotPasswordClick(true)}/>
+                <Button type="button" className="btn btn-primary" buttonText='Sign In' onButtonClick={this.onButtonClick}/>
+
+                <Button type="button" className="btn btn-danger" buttonText='Forgot password' onButtonClick={() => this.onForgotPasswordClick(true)}/>
             </form>
         )
     }

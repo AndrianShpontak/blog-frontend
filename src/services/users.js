@@ -17,5 +17,16 @@ const getAllUsers = function () {
         .get(/users/);
 };
 
-export {getUser, getAllUsers, getUserWithPosts};
-export default {getUser, getAllUsers, getUserWithPosts};
+const deleteUser = function (userId) {
+    return axios
+        .delete(/users/ + userId);
+};
+
+const updateUserInformation = function (userId) {
+    return axios
+        .patch(`/users/${userId}`)
+        .then(res => res.data.data)
+};
+
+export {getUser, getAllUsers, getUserWithPosts, updateUserInformation, deleteUser};
+export default {getUser, getAllUsers, getUserWithPosts, updateUserInformation, deleteUser}

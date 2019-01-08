@@ -12,6 +12,7 @@ const signUp = user => function (dispatch) {
     return axios.post('/users/signUp', user)
         .then(function (res) {
             dispatch(authActions.setUser(res.data));
+
         })
 };
 

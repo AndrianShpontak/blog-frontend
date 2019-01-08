@@ -17,13 +17,18 @@
     padding: 0 30px;
 }
 
-.header ul {
+ul.header {
     display: flex;
     list-style: none;
 }
 
-.header ul li {
-    margin-left: 20px;
+ul.header div.nav-container li {
+    margin: 0 10px;
+}
+
+ul.header div.nav-container {
+    display: flex;
+    align-items: center;
 }
 
 .content {
@@ -78,4 +83,5 @@
     display: flex;
     justify-content: space-between;
 }
+
 

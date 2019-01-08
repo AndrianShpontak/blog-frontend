@@ -15,7 +15,6 @@ class UserInform extends React.Component {
                 {
                     this.props.users.map(user => (
                         <User
-                            key={user._id}
                             id={user._id}
                             body={user.body}
                             firstName={user.firstName}
@@ -32,8 +31,8 @@ class UserInform extends React.Component {
 
 const mapDispatchToProps = function (dispatch) {
     return {
-        getAllUsers: function (params) {
-            return dispatch(usersService.getAllPosts(params))
+        updateUserInformation: function (params) {
+            return dispatch(usersService.updateUserInformation(params))
         }
 
     }
