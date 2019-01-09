@@ -1,33 +1,37 @@
 import React from 'react';
 import usersService from "../services/users";
 import {deleteUser} from "../services/users";
+import {connect} from 'react-redux'
 
 
-class GetAllUsers extends React.Component {
+class UsersList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            user: null,
             data: []
         }
 
     }
 
     componentDidMount() {
+        this.loadUsers();
+    }
+
+    loadUsers = () => {
         usersService
             .getAllUsers()
             .then(res => this.setState({isLoading: false, data: res.data.data}));
-    }
+    };
 
-    clickDeleteUser = () => {
-        deleteUser(this.props.id)
-            .then(() => this.props.getAllUsers())
+    clickDeleteUser = (id) => {
+        deleteUser(id)
+            .then(() => this.loadUsers());
     };
 
     render() {
         const {
-            state: {
+            props: {
                 user
             }
         } = this;
@@ -36,7 +40,7 @@ class GetAllUsers extends React.Component {
             return <p>Loading...</p>
         }
 
-      //  const canDeleteUser = user.role === '1' && user.role === '2';
+        const canDeleteUser = user.role === '1' || user.role === '2';
 
         return (
             <div className='list-group-item'>
@@ -47,9 +51,12 @@ class GetAllUsers extends React.Component {
                                     <a href={`/users/${user._id}`}>
                                         {user.firstName + ' ' + user.lastName}
                                     </a>
-                                    {/*{canDeleteUser &&
-                                    <span className="btn-delete" onClick={this.clickDeleteUser}>X</span>
-                                    }*/}
+                                    {
+                                        canDeleteUser && (
+                                            <span className="btn-delete"
+                                                  onClick={() => this.clickDeleteUser(user._id)}>X</span>
+                                        )
+                                    }
                                 </li>
                             )
                         )
@@ -60,5 +67,10 @@ class GetAllUsers extends React.Component {
     }
 }
 
+const mapState = function (store) {
+    return {
+        user: store.auth.user
+    }
+};
 
-export default GetAllUsers;
+export default connect(mapState)(UsersList);

@@ -9,7 +9,7 @@ import Posts from "./screens/Posts";
 import Header from './components/Header';
 import authService from './services/auth';
 import UserProfile from "./screens/UserProfile";
-import GetAllUsers from "./screens/GetAllUsers";
+import GetAllUsers from "./screens/UsersList";
 
 import {withRouter} from 'react-router-dom'
 
