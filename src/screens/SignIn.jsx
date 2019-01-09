@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import Button from '../components/Button';
 import authService from '../services/auth';
 import {connect} from 'react-redux';
-import  ForgotPassword from './ForgotPassword'
+import  ForgotPassword from './ForgotPassword';
+import { NavLink } from 'react-router-dom'
+
 
 class SignIn extends Component {
     state = {
@@ -64,6 +66,8 @@ class SignIn extends Component {
                 <Button type="button" className="btn btn-primary" buttonText='Sign In' onButtonClick={this.onButtonClick}/>
 
                 <Button type="button" className="btn btn-danger" buttonText='Forgot password' onButtonClick={() => this.onForgotPasswordClick(true)}/>
+                <NavLink to="/signUp">Don't have account?</NavLink>
+
             </form>
         )
     }

@@ -14,13 +14,14 @@ class Posts extends React.Component {
             isAddPostOpen: false
         };
     }
+
     componentDidMount() {
-        this.props.getAllPosts({page:0, countPerPage:10});
+        this.props.getAllPosts({page: 0, countPerPage: 10});
     }
 
     changeContent = (page) => {
         console.log(page);
-        this.props.getAllPosts({page, countPerPage:10});
+        this.props.getAllPosts({page, countPerPage: 10});
 
         this.setState({
             page
@@ -28,29 +29,34 @@ class Posts extends React.Component {
 
     };
 
-    toggleIsOpenAddPost = () => this.setState(prev => ({ isAddPostOpen: !prev.isAddPostOpen }));
+    toggleIsOpenAddPost = () => this.setState(prev => ({isAddPostOpen: !prev.isAddPostOpen}));
 
     render() {
         const user = this.props.user;
 
+        const canAddPost = user.role === '3';
         return (
             <div>
+                {canAddPost && (
+                    <div>
+                        <button type='button' className="btn btn-primary btn-lg btn-block"
+                                onClick={this.toggleIsOpenAddPost}> Add Post
+                        </button>
 
-                <button type='button'  className="btn btn-primary btn-lg btn-block" onClick={this.toggleIsOpenAddPost}> Add Post</button>
-
-                {
-                    user && this.state.isAddPostOpen ? <AddPost/> : null
-                }
-
+                        {
+                            user && this.state.isAddPostOpen ? <AddPost/> : null
+                        }
+                    </div>
+                )}
                 <div>
                     {
                         this.props.posts.map(post => (
                             <Post
                                 key={post._id}
                                 id={post._id}
-                                title={ post.title}
+                                title={post.title}
                                 body={post.body}
-                                description = {post.description}
+                                description={post.description}
                                 date={post.date}
                                 postAuthor={post.postAuthor || null}
                                 likeDislike={post.likeDislike}

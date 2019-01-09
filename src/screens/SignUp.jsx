@@ -2,15 +2,14 @@ import React, {Component} from 'react';
 import Button from '../components/Button';
 import authService from "../services/auth";
 import connect from "react-redux/es/connect/connect";
+import { NavLink } from 'react-router-dom'
 
 class SignUp extends Component {
     state = {
         firstName: '',
         lastName: '',
         email: '',
-        pass: '',
-        role: '3'
-
+        pass: ''
     };
 
     onChangeFirstName = event => {
@@ -25,9 +24,7 @@ class SignUp extends Component {
     onChangePass = event => {
         this.setState({pass: event.target.value})
     };
-    onChangeRole = event => {
-        this.setState({role: event.target.value})
-    };
+
 
     onButtonClick = () => {
         this.props.signUp({
@@ -35,7 +32,6 @@ class SignUp extends Component {
             pass: this.state.pass,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            role: this.state.role
         })
             .then(() => this.props.history.push('/'))
             .catch((error) => {
@@ -93,6 +89,8 @@ class SignUp extends Component {
                 <br/>
                     <Button type="button" className="btn btn-primary" buttonText='Sign Up'
                             onButtonClick={this.onButtonClick}/>
+
+                <NavLink to="/signIn">Already have account?</NavLink>
 
             </form>
         )

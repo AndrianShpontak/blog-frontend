@@ -1,8 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import authService from "../services/auth";
-import RegisterCard from "./RegisterCard";
 
 class Header extends React.Component {
     state = {
@@ -14,6 +13,9 @@ class Header extends React.Component {
 
         return (
             <nav className="header-container">
+                <div className="logo">
+                    <img src="../../Blog-Become-a-Book-Banner.jpg" responsive="true" alt='' />
+                </div>
                 {
                     user ? (
                         <ul className="nav header">
@@ -27,16 +29,19 @@ class Header extends React.Component {
                             </div>
                             <div className="nav-container">
                                 <li className="nav-item">
-                                    <button className="btn btn-outline-danger" onClick={this.props.logOut}>LogOut</button>
+                                    <button className="btn btn-outline-danger" onClick={this.props.logOut}>LogOut
+                                    </button>
                                 </li>
                                 <span>{user.firstName + ' ' + user.lastName}</span>
                             </div>
-
                         </ul>
                     ) : (
-                        <RegisterCard user={user}/>
-                    )}
-
+                        <div>
+                            <Link to="/signIn">Sign In</Link>
+                            <Link to="/signUp">Sign Up</Link>
+                        </div>
+                    )
+                }
             </nav>
         );
     }

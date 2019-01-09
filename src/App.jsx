@@ -3,9 +3,8 @@ import './App.css';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import ForgotPassword from './screens/ForgotPassword';
-import {Router, Switch, Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {createBrowserHistory} from 'history';
 import Posts from "./screens/Posts";
 import Header from './components/Header';
 import authService from './services/auth';
@@ -15,41 +14,47 @@ import GetAllUsers from "./screens/GetAllUsers";
 import {withRouter} from 'react-router-dom'
 
 
-const history = createBrowserHistory();
-
-
 class App extends Component {
+    state = {
+        isLoading: true
+    };
+
     componentDidMount() {
-        this.props.getCurrentUser();
+        this.props
+            .getCurrentUser()
+            .then(() => {
+                this.setState({ isLoading: false }, () => {
+                    if (!this.props.user) {
+                        this.props.history.push('/signIn');
+                    }
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({ isLoading: false });
+            });
     }
 
 
     render() {
         const {
             user
-        }=this.props;
+        } = this.props;
 
-        return (
-            <Router history={history}>
+        return this.state.isLoading ? <div>loading...</div> : (
                 <div className="app">
-                    <Header/>
-                    {user && user._id &&
+                    <Header />
                     <div className="content">
                         <Switch>
-                            <Route path='/' component={Posts} exact/>
-                            <Route path='/signIn' component={SignIn}/>
-                            <Route path='/signUp' component={SignUp}/>
-                            <Route path='/forgotPass' component={ForgotPassword}/>
-                            <Route path='/users/' component={GetAllUsers} exact/>
-                            <Route path='/users/:id' component={UserProfile}/>
-
-                            {/*// route path = '/users/:id' component UserProfile
-                            // in UserProfile this.props.match.params.id*/}
+                            <Route path='/signIn' component={SignIn} />
+                            <Route path='/signUp' component={SignUp} />
+                            <Route path='/forgotPass' component={ForgotPassword} />
+                            { user && <Route path='/' component={Posts} exact /> }
+                            { user && <Route path='/users/' component={GetAllUsers} exact /> }
+                            { user && <Route path='/users/:id' component={UserProfile} /> }
                         </Switch>
                     </div>
-                    }
                 </div>
-            </Router>
         );
     }
 }const mapState = function (store) {

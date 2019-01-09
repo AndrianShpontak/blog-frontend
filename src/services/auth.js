@@ -33,7 +33,9 @@ const getCurrentUser = () => dispatch => {
     return axios.get('/users/currentUser')
         .then(function (res) {
             dispatch(authActions.setUser(res.data));
-            dispatch(authActions.setLoadingStatus(true))
+            dispatch(authActions.setLoadingStatus(true));
+
+            return res.data;
         })
         .catch(() => dispatch(authActions.setUser(null)))
 };

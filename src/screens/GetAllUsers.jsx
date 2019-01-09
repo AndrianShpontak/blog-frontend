@@ -8,6 +8,7 @@ class GetAllUsers extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
+            user: null,
             data: []
         }
 
@@ -25,9 +26,17 @@ class GetAllUsers extends React.Component {
     };
 
     render() {
+        const {
+            state: {
+                user
+            }
+        } = this;
+
         if (this.state.isLoading) {
             return <p>Loading...</p>
         }
+
+      //  const canDeleteUser = user.role === '1' && user.role === '2';
 
         return (
             <div className='list-group-item'>
@@ -38,7 +47,9 @@ class GetAllUsers extends React.Component {
                                     <a href={`/users/${user._id}`}>
                                         {user.firstName + ' ' + user.lastName}
                                     </a>
+                                    {/*{canDeleteUser &&
                                     <span className="btn-delete" onClick={this.clickDeleteUser}>X</span>
+                                    }*/}
                                 </li>
                             )
                         )
