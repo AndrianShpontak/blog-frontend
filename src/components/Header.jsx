@@ -32,7 +32,9 @@ class Header extends React.Component {
                                     <button className="btn btn-outline-danger" onClick={this.props.logOut}>LogOut
                                     </button>
                                 </li>
-                                <span>{user.firstName + ' ' + user.lastName}</span>
+                                <a href={`/users/${user._id}`}>
+                                    {user.firstName + ' ' + user.lastName}
+                                </a>
                             </div>
                         </ul>
                     ) : (
