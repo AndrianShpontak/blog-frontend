@@ -48,9 +48,18 @@ class AddPost extends React.Component {
     render() {
         return (
             <div className="add-post">
-                <Input label='Post Title' value={this.state.title} onChange={this.onChangeTitle}/>
-                <Input label='Post body' value={this.state.body} onChange={this.onChangeBody}/>
-                <Input label='Post description' value={this.state.description} onChange={this.onChangeDescription}/>
+                <Input label='Post Title'
+                       placeholder="Post Title"
+                       value={this.state.title}
+                       onChange={this.onChangeTitle}/>
+                <Input label='Post body'
+                       placeholder="Post body"
+                       value={this.state.body}
+                       onChange={this.onChangeBody}/>
+                <Input label='Post description'
+                       placeholder="Post description"
+                       value={this.state.description}
+                       onChange={this.onChangeDescription}/>
 
                 <Button onButtonClick={this.addPost} buttonText='Add Post'
                         disabled={!this.state.title && !this.state.body && !this.state.description}/>
