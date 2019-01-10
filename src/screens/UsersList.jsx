@@ -21,7 +21,10 @@ class UsersList extends React.Component {
     loadUsers = () => {
         usersService
             .getAllUsers()
-            .then(res => this.setState({isLoading: false, data: res.data.data}));
+            .then(res => this.setState({
+                isLoading: false,
+                data: res.data.data.sort((a, b) => a.role - b.role)
+            }));
     };
 
     clickDeleteUser = (id) => {
