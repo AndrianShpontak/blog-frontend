@@ -132,7 +132,7 @@ class Post extends React.Component {
                     <LikeDislike likes={likeDislike} onLike={toggleLike} />
                     {
                         pa
-                            ? <Link to={'/users/' + pa._id} >
+                            ? <Link to={`/users/${pa._id}`} >
                                 <span>by {`${pa.firstName} ${pa.lastName}`} at {date.substr(0, 10)}</span>
                               </Link>
                             : null

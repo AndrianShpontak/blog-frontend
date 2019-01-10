@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authActions from "../actions/auth";
 
 const getUser = (userId) => {
     return axios
@@ -22,11 +23,13 @@ const deleteUser = function (userId) {
         .delete(/users/ + userId);
 };
 
-const updateUserInformation = function (userId) {
+const editUser = (userId, body) => function (dispatch) {
     return axios
-        .patch(`/users/${userId}`)
-        .then(res => res.data.data)
+        .patch(`/users/${userId}`, body)
+        .then(function (res) {
+            dispatch(authActions.setUser(res.data.data))
+        })
 };
 
-export {getUser, getAllUsers, getUserWithPosts, updateUserInformation, deleteUser};
-export default {getUser, getAllUsers, getUserWithPosts, updateUserInformation, deleteUser}
+export {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser};
+export default {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser}

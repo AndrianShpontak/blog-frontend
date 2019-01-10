@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import usersService from '../services/users';
+import usersService, {deleteUser} from '../services/users';
 import postsService from '../services/posts';
 import connect from "react-redux/es/connect/connect";
 import Post from "../components/Post";
@@ -45,11 +45,13 @@ class UserProfile extends Component {
         });
     };
 
+    onEditProfileClick = () => {
+    };
+
     toggleSubscriber = (authorId) => {
         postsService.toggleSubscribe(authorId)
             .then(() => this.setState(prev => ({isSubscribed: !prev.isSubscribed})));
     };
-
 
     render() {
         const {
@@ -71,7 +73,8 @@ class UserProfile extends Component {
 
         const canSubscribe = user.role === '3' && currentUser._id !== user._id;
 
-        const canChangeUserInformation = user.role === "1" && user.role === "2" && currentUser._id === user._id;
+        const canChangeUserInformation = currentUser._id === user._id;
+
 
 
         return (
@@ -80,6 +83,11 @@ class UserProfile extends Component {
                     <div className="card-header">
                         User profile
                     </div>
+                    {canChangeUserInformation && (
+                        <Button className='btn btn-primary btn-sm' buttonText='Edit profile' onClick='this.onEditProfileClick'/>
+
+                    )}
+
                     <div className="card-body">
 
                         <h1>{user.firstName} {user.lastName}</h1>
@@ -87,11 +95,6 @@ class UserProfile extends Component {
                         <h6>{user._id}</h6>
                         <h5>{ROLES[user.role]}</h5>
                     </div>
-
-                    {canChangeUserInformation && (
-                        <Button className='btn btn-primary btn-sm' buttonText='Change information' onClick=''/>
-
-                    )}
 
                     {
                         canSubscribe && (
