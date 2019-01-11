@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
-import usersService, {deleteUser} from '../services/users';
+import usersService from '../services/users';
 import postsService from '../services/posts';
 import connect from "react-redux/es/connect/connect";
 import Post from "../components/Post";
@@ -47,9 +47,6 @@ class UserProfile extends Component {
         });
     };
 
-    onEditProfileClick = () => {
-    };
-
     toggleSubscriber = (authorId) => {
         postsService.toggleSubscribe(authorId)
             .then(() => this.setState(prev => ({isSubscribed: !prev.isSubscribed})));
@@ -78,7 +75,6 @@ class UserProfile extends Component {
         const canChangeUserInformation = currentUser._id === user._id;
 
 
-
         return (
             <div className='user-profile'>
                 <div className='card'>
@@ -87,7 +83,7 @@ class UserProfile extends Component {
                     </div>
                     {canChangeUserInformation && (
                         <Link to="/profile/edit">
-                            <Button className='btn btn-primary btn-sm' buttonText='Edit profile' />
+                            <Button className='btn btn-primary btn-sm' buttonText='Edit profile'/>
                         </Link>
 
                     )}
