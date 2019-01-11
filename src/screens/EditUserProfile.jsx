@@ -62,30 +62,34 @@ class EditUserProfile extends Component {
 
         return (
             <div>
+                <label htmlFor="inputFirstName">First Name</label>
                 <Input
                     label="First Name"
                     value={firstName}
                     onChange={this.onInputChange('firstName')}
                 />
 
-                <Input label="Last Name"
-                       value={lastName}
+                <label htmlFor="inputLastName">Last Name</label>
+                <Input value={lastName}
                        onChange={this.onInputChange('lastName')}
                 />
 
                 <p>Change Password:</p>
-                <Input label = "Password"
-                       value = {pass}
+
+                <label htmlFor="inputPassword">Password</label>
+                <Input value = {pass}
                        type="password"
                        onChange={this.onInputChange('pass')}
                 />
-                <Input label = "New password"
-                       value = {newPass}
+
+                <label htmlFor="inputPassword">New password</label>
+                <Input value = {newPass}
                        type="password"
                        onChange={this.onInputChange('newPass')}
                 />
-                <Input label = "Repeat new password"
-                       value = {repeatNewPass}
+
+                <label htmlFor="inputPassword">Repeat new password</label>
+                <Input value = {repeatNewPass}
                        type="password"
                        onChange={this.onInputChange('repeatNewPass')}
                 />
