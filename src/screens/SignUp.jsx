@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import authService from "../services/auth";
 import connect from "react-redux/es/connect/connect";
 import { NavLink } from 'react-router-dom'
+import {toast} from "react-toastify";
 
 class SignUp extends Component {
     state = {
@@ -35,7 +36,8 @@ class SignUp extends Component {
         })
             .then(() => this.props.history.push('/'))
             .catch((error) => {
-                console.log(error)
+                console.log(error);
+                toast.error('You did not enter all data')
             })
     };
 
@@ -54,7 +56,7 @@ class SignUp extends Component {
                         />
                     </div>
                     <div className="col">
-                        <label htmlFor="inputLastName">LAst Name</label>
+                        <label htmlFor="inputLastName">Last Name</label>
                         <input type="text"
                                className="form-control"
                                placeholder="Last Name"
