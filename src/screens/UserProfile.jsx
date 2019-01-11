@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom'
+
 import usersService, {deleteUser} from '../services/users';
 import postsService from '../services/posts';
 import connect from "react-redux/es/connect/connect";
@@ -84,7 +86,9 @@ class UserProfile extends Component {
                         User profile
                     </div>
                     {canChangeUserInformation && (
-                        <Button className='btn btn-primary btn-sm' buttonText='Edit profile' onClick='this.onEditProfileClick'/>
+                        <Link to="/profile/edit">
+                            <Button className='btn btn-primary btn-sm' buttonText='Edit profile' />
+                        </Link>
 
                     )}
 
