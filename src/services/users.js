@@ -27,7 +27,7 @@ const editUser = (userId, body) => function (dispatch) {
     return axios
         .patch(`/users/${userId}`, body)
         .then(function (res) {
-            dispatch(authActions.setUser(res.data.data))
+            // dispatch(authActions.setUser(res.data.data))
         })
 };
 
