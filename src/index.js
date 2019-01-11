@@ -5,6 +5,10 @@ import store from './store';
 import {Provider} from 'react-redux';
 import {Router} from 'react-router-dom';
 import createBrowserHistory from "history/createBrowserHistory";
+
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const history = createBrowserHistory();
 
 
