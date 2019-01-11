@@ -1,5 +1,4 @@
 import axios from 'axios';
-import authActions from "../actions/auth";
 
 const getUser = (userId) => {
     return axios
