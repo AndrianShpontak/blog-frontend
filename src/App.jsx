@@ -9,9 +9,12 @@ import Posts from "./screens/Posts";
 import Header from './components/Header';
 import authService from './services/auth';
 import UserProfile from "./screens/UserProfile";
-import GetAllUsers from "./screens/UsersList";
+import UsersList from "./screens/UsersList";
+import { ToastContainer } from 'react-toastify';
 
 import {withRouter} from 'react-router-dom'
+
+import EditUserProfile from "./screens/EditUserProfile";
 
 
 class App extends Component {
@@ -50,14 +53,18 @@ class App extends Component {
                             <Route path='/signUp' component={SignUp} />
                             <Route path='/forgotPass' component={ForgotPassword} />
                             { user && <Route path='/' component={Posts} exact /> }
-                            { user && <Route path='/users/' component={GetAllUsers} exact /> }
+                            { user && <Route path='/users/' component={UsersList} exact /> }
                             { user && <Route path='/users/:id' component={UserProfile} /> }
+                            { user && <Route path="/profile/edit" component={EditUserProfile} /> }
                         </Switch>
                     </div>
+                    <ToastContainer />
                 </div>
         );
     }
-}const mapState = function (store) {
+}
+
+const mapState = function (store) {
     return {
         user: store.auth.user
     }
