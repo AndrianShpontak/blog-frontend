@@ -17,7 +17,10 @@ class SignIn extends Component {
 
     onButtonClick = () => {
         this.props.signIn({email: this.state.email, pass: this.state.password})
-            .then(() => this.props.history.push('/'))
+            .then(() => {
+                toast.success('Sign In  is success');
+                this.props.history.push('/')
+            })
             .catch((error) => {
                 console.log(error);
                 toast.error('Email or password is incorrect')
@@ -37,7 +40,8 @@ class SignIn extends Component {
     };
 
     onForgotPasswordClick = (value) => {
-           this.setState({forgotClick: value})
+        toast.success('email sent');
+        this.setState({forgotClick: value})
     };
 
     render() {
