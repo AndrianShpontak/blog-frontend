@@ -8,6 +8,7 @@ import Input from "./Input";
 import postsService from "../services/posts";
 import {connect} from "react-redux";
 import LikeDislike from './LikeDislike';
+import {toast} from "react-toastify";
 
 class Post extends React.Component {
     state = {
@@ -62,7 +63,8 @@ class Post extends React.Component {
 
     clickDeletePost = () => {
         deletePost(this.props.id)
-            .then(() => this.props.getAllPosts())
+            .then(() => this.props.getAllPosts());
+        toast.error('you do not have access to this action');
     };
 
     clickDeleteComment = (id) => {
@@ -71,9 +73,9 @@ class Post extends React.Component {
             .then(res => {
                 this.setState({
                     comments: res.data.data ? res.data.data.comments : [],
-
-                })
-            })
+                });
+            });
+        toast.error('you do not have access to this action');
     };
 
     loadMore = (page) => {
