@@ -4,7 +4,7 @@ const Input = ({ type = 'text', label, ...props }) => (
     <div className="input">
         <label>
             {props.label}
-            <input {...props} />
+            <input type={type} {...props} />
         </label>
     </div>
 );
