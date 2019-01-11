@@ -3,6 +3,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import authService from '../services/auth';
 import {connect} from 'react-redux';
+import {toast} from "react-toastify";
 
 class ForgotPassword extends Component {
     state = {
@@ -11,7 +12,9 @@ class ForgotPassword extends Component {
 
     onButtonClick = () =>{
         this.props.onForgotClick();
-        this.props.forgotPassword(this.state.email)
+        this.props.forgotPassword(this.state.email);
+        toast.success('email sent');
+
     };
 
     onEmailChange = event => {

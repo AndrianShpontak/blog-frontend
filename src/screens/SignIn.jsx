@@ -40,7 +40,6 @@ class SignIn extends Component {
     };
 
     onForgotPasswordClick = (value) => {
-        toast.success('email sent');
         this.setState({forgotClick: value})
     };
 

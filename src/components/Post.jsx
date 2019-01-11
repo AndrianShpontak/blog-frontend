@@ -8,7 +8,6 @@ import Input from "./Input";
 import postsService from "../services/posts";
 import {connect} from "react-redux";
 import LikeDislike from './LikeDislike';
-import {toast} from "react-toastify";
 
 class Post extends React.Component {
     state = {
@@ -64,8 +63,8 @@ class Post extends React.Component {
     clickDeletePost = () => {
         deletePost(this.props.id)
             .then(() => this.props.getAllPosts());
-        toast.error('you do not have access to this action');
     };
+
 
     clickDeleteComment = (id) => {
         deleteComment(id )
@@ -75,7 +74,6 @@ class Post extends React.Component {
                     comments: res.data.data ? res.data.data.comments : [],
                 });
             });
-        toast.error('you do not have access to this action');
     };
 
     loadMore = (page) => {
@@ -116,7 +114,7 @@ class Post extends React.Component {
         } = this;
 
         return (
-            <div className="UserProfile">
+            <div className="Posts">
                 <h2 className="title">
                     {title}
                     <span className="btn-delete" onClick={this.clickDeletePost}>X</span>
@@ -157,7 +155,7 @@ class Post extends React.Component {
                             >
                                 {
                                     this.state.comments.length ? this.state.comments.map(comment => (
-                                        <div key={comment._id} style={{ height: 50 }}>
+                                        <div className="comments-container" key={comment._id} style={{ height: 50 }}>
                                             <span>{`${comment.author.firstName} ${comment.author.lastName}:`}</span>
                                             <br/>
                                             <div className="delete-comment">
