@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { toast } from 'react-toastify';
+
 import Button from '../components/Button';
 import authService from '../services/auth';
 import {connect} from 'react-redux';
@@ -17,7 +19,8 @@ class SignIn extends Component {
         this.props.signIn({email: this.state.email, pass: this.state.password})
             .then(() => this.props.history.push('/'))
             .catch((error) => {
-                console.log(error)
+                console.log(error);
+                toast.error('Email or password is incorrect')
             })
     };
 
