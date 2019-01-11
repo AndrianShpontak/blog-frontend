@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import InfiniteScroller from 'react-infinite-scroller';
 
 import Button from "./Button";
@@ -41,7 +41,7 @@ class Post extends React.Component {
 
         this.setState({
             isCommentsOpen: false,
-            comments:[]
+            comments: []
         })
     };
 
@@ -49,7 +49,7 @@ class Post extends React.Component {
         createComment(this.props.id, this.state.commentText)
             .then(() => {
                 this.loadComments();
-                this.setState({ commentText: '' })
+                this.setState({commentText: ''})
             })
     };
 
@@ -67,8 +67,8 @@ class Post extends React.Component {
 
 
     clickDeleteComment = (id) => {
-        deleteComment(id )
-            .then(() => postsService.getPostWithComments({ postId: this.props.id }))
+        deleteComment(id)
+            .then(() => postsService.getPostWithComments({postId: this.props.id}))
             .then(res => {
                 this.setState({
                     comments: res.data.data ? res.data.data.comments : [],
@@ -115,36 +115,40 @@ class Post extends React.Component {
 
         return (
             <div className="Posts">
-                <h2 className="title">
-                    {title}
-                    <span className="btn-delete" onClick={this.clickDeletePost}>X</span>
-                </h2>
-                <p>
-                    {body}
-                </p>
-                <p>
-                    {description}
-                </p>
-                <br/>
-
+                <div className='card'>
+                    <div className='card-body'>
+                        <h2 className="card-title">
+                            {title}
+                            <span className="btn-delete" onClick={this.clickDeletePost}>X</span>
+                        </h2>
+                        <p className='card-text'>
+                            {body}
+                        </p>
+                        <p className="card-text">
+                            <small className="text-muted">
+                                {description}
+                            </small>
+                        </p>
+                    </div>
+                </div>
                 <br/>
                 <div className="author-info">
-                    <LikeDislike likes={likeDislike} onLike={toggleLike} />
+                    <LikeDislike likes={likeDislike} onLike={toggleLike}/>
                     {
                         pa
-                            ? <Link to={`/users/${pa._id}`} >
+                            ? <Link to={`/users/${pa._id}`}>
                                 <span>by {`${pa.firstName} ${pa.lastName}`} at {date.substr(0, 10)}</span>
-                              </Link>
+                            </Link>
                             : null
                     }
                 </div>
 
                 <br/>
-                <br/>
-                <Button buttonText="show comments" className="btn btn-info btn-lg btn-block btn-sm" onButtonClick={this.toggleComments}/>
+                <Button buttonText="show comments" className="btn btn-info btn-lg btn-block btn-sm"
+                        onButtonClick={this.toggleComments}/>
                 {
                     this.state.isCommentsOpen && (
-                        <div style={{ height: 300, overflow: 'auto' }}>
+                        <div style={{height: 300, overflow: 'auto'}}>
                             <InfiniteScroller
                                 pageStart={0}
                                 hasMore={hasMore}
@@ -155,12 +159,13 @@ class Post extends React.Component {
                             >
                                 {
                                     this.state.comments.length ? this.state.comments.map(comment => (
-                                        <div className="comments-container" key={comment._id} style={{ height: 50 }}>
+                                        <div className="comments-container" key={comment._id} style={{height: 50}}>
                                             <span>{`${comment.author.firstName} ${comment.author.lastName}:`}</span>
                                             <br/>
                                             <div className="delete-comment">
-                                              <span>{comment.text}</span>
-                                              <span className="btn-delete" onClick={() => this.clickDeleteComment(comment._id)} >X</span>
+                                                <span>{comment.text}</span>
+                                                <span className="btn-delete"
+                                                      onClick={() => this.clickDeleteComment(comment._id)}>X</span>
                                             </div>
                                         </div>
                                     )) : <span>no comments yet:(</span>
@@ -170,17 +175,17 @@ class Post extends React.Component {
                     )
                 }
 
-                { showAddComments }
-                    <div className="add-comment">
-                        <Input
-                            value={this.state.commentText}
-                            onChange={this.onChangeCommentText}
-                            onKeyUp={this.onKeyUp}
-                         />
-                        <Button onButtonClick={this.addComment} buttonText='Add comment'
-                                disabled={!this.state.commentText}/>
-                    </div>
-
+                {showAddComments}
+                <div className="add-comment">
+                    <Input
+                        value={this.state.commentText}
+                        onChange={this.onChangeCommentText}
+                        onKeyUp={this.onKeyUp}
+                    />
+                    <Button onButtonClick={this.addComment} buttonText='Add comment'
+                            disabled={!this.state.commentText}/>
+                </div>
+                <br/>
             </div>
         )
     }
