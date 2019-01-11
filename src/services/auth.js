@@ -32,6 +32,7 @@ const logOut = () => function (dispatch) {
 const getCurrentUser = () => dispatch => {
     return axios.get('/users/currentUser')
         .then(function (res) {
+            console.log(res.data)
             dispatch(authActions.setUser(res.data));
             dispatch(authActions.setLoadingStatus(true));
 
