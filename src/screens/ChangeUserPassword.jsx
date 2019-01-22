@@ -21,7 +21,8 @@ class ChangeUserPassword extends Component {
                 changePassword
             },
             state: {
-               newPass, repeatNewPass
+               newPass,
+               repeatNewPass
             }
         } = this;
 
