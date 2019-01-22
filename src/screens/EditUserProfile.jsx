@@ -9,9 +9,6 @@ import { toast } from 'react-toastify'
 class EditUserProfile extends Component {
     state = {
         email: this.props.currentUser.email,
-        pass: '',
-        newPass:'',
-        repeatNewPass:'',
         firstName: this.props.currentUser.firstName,
         lastName: this.props.currentUser.lastName,
 
@@ -25,23 +22,19 @@ class EditUserProfile extends Component {
                 editUser
             },
             state: {
-                firstName, lastName, pass, newPass, repeatNewPass
+                firstName, lastName
             }
         } = this;
 
-        if (newPass === repeatNewPass){
-            return editUser(currentUser._id, {
-                firstName,
-                lastName,
-                pass: pass || currentUser.pass,
-                newPass
+        editUser(currentUser._id,{
+            firstName,
+            lastName,
+            currentUser
+        })
+            .then(() => {
+                toast.success('User information is updated');
             })
-                .then(() => {
-                    toast.success('User information is updated');
-                    this.setState({ pass: '', newPass: '', repeatNewPass: ''})
-                })
-        }
-        return toast.error('pass and repeat pass do not match')
+
     };
 
     onInputChange = (key) => e => {
@@ -54,9 +47,6 @@ class EditUserProfile extends Component {
         const {
             firstName,
             lastName,
-            pass,
-            newPass,
-            repeatNewPass,
             error
         } = this.state;
 
@@ -72,26 +62,6 @@ class EditUserProfile extends Component {
                 <label htmlFor="inputLastName">Last Name</label>
                 <Input value={lastName}
                        onChange={this.onInputChange('lastName')}
-                />
-
-                <p>Change Password:</p>
-
-                <label htmlFor="inputPassword">Password</label>
-                <Input value = {pass}
-                       type="password"
-                       onChange={this.onInputChange('pass')}
-                />
-
-                <label htmlFor="inputPassword">New password</label>
-                <Input value = {newPass}
-                       type="password"
-                       onChange={this.onInputChange('newPass')}
-                />
-
-                <label htmlFor="inputPassword">Repeat new password</label>
-                <Input value = {repeatNewPass}
-                       type="password"
-                       onChange={this.onInputChange('repeatNewPass')}
                 />
 
                 {
