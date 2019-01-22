@@ -8,6 +8,9 @@ import Post from "../components/Post";
 import Pag from "../components/Pagination";
 import Button from "../components/Button";
 
+import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
+
 const ROLES = {
     1: 'admin',
     2: 'moderator',
@@ -22,7 +25,9 @@ class UserProfile extends Component {
             user: null,
             posts: [],
             isSubscribed: false,
-            page: 0
+            page: 0,
+            dropdownOpen: false
+
         };
     }
 
@@ -82,10 +87,23 @@ class UserProfile extends Component {
                         User profile
                     </div>
                     {canChangeUserInformation && (
-                        <Link to="/profile/edit">
-                            <Button className='btn btn-primary btn-sm' buttonText='Edit profile'/>
-                        </Link>
 
+                        <UncontrolledDropdown>
+                            <DropdownToggle caret>
+                                Edit Profile
+                            </DropdownToggle>
+                            <DropdownMenu>
+
+                                <Link to="/profile/edit">
+                                    <Button className='btn btn-primary btn-sm' buttonText='Edit profile'/>
+                                </Link>
+                                <br/>
+                                <Link to="/profile/changePassword">
+                                    <Button className='btn btn-primary btn-sm' buttonText='Change password'/>
+                                </Link>
+
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
                     )}
 
                     <div className="card-body">
