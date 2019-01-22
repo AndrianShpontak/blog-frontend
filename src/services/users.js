@@ -30,5 +30,13 @@ const editUser = (userId, body) => function (dispatch) {
         })
 };
 
-export {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser};
-export default {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser}
+const changePassword = (userId, body) => function (dispatch) {
+    return axios
+        .patch(`/users/changePassword/${userId}`, body)
+        .then(function (res) {
+            // dispatch(authActions.setUser(res.data.data))
+        })
+};
+
+export {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser, changePassword};
+export default {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser, changePassword}
