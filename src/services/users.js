@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authActions from '../actions/auth';
 
 const getUser = (userId) => {
     return axios
@@ -26,7 +27,7 @@ const editUser = (userId, body) => function (dispatch) {
     return axios
         .patch(`/users/${userId}`, body)
         .then(function (res) {
-            // dispatch(authActions.setUser(res.data.data))
+             dispatch(authActions.setUser(res.data.updated))
         })
 };
 
@@ -37,6 +38,10 @@ const changePassword = (userId, body) => function (dispatch) {
             // dispatch(authActions.setUser(res.data.data))
         })
 };
+const verificationEmail = function(body){
+    return axios
+        .post('/users/verificateEmail', body)
+} ;
 
-export {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser, changePassword};
-export default {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser, changePassword}
+export {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser, changePassword, verificationEmail};
+export default {getUser, getAllUsers, getUserWithPosts, editUser, deleteUser, changePassword, verificationEmail}
