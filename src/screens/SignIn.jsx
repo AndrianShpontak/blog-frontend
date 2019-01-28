@@ -23,7 +23,7 @@ class SignIn extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                toast.error('Email or password is incorrect')
+                toast.error(error.message)
             })
     };
 
