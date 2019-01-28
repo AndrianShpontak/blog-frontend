@@ -8,6 +8,7 @@ import Input from "./Input";
 import postsService from "../services/posts";
 import {connect} from "react-redux";
 import LikeDislike from './LikeDislike';
+import {toast} from "react-toastify";
 
 class Post extends React.Component {
     state = {
@@ -62,7 +63,11 @@ class Post extends React.Component {
 
     clickDeletePost = () => {
         deletePost(this.props.id)
-            .then(() => this.props.getAllPosts());
+            .then(() => this.props.getAllPosts())
+            .catch((error) => {
+                console.log(error);
+                toast.error('You did not delete post')
+            })
     };
 
 
@@ -73,7 +78,11 @@ class Post extends React.Component {
                 this.setState({
                     comments: res.data.data ? res.data.data.comments : [],
                 });
-            });
+            })
+            .catch((error) => {
+            console.log(error);
+            toast.error('You did not delete comment')
+        })
     };
 
     loadMore = (page) => {
@@ -119,7 +128,7 @@ class Post extends React.Component {
                     <div className='card-body'>
                         <h2 className="card-title">
                             {title}
-                            <span className="btn-delete" onClick={this.clickDeletePost}>X</span>
+                            <span className="btn-delete" onClick={this.clickDeletePost} >X</span>
                         </h2>
                         <p className='card-text'>
                             {body}
@@ -134,13 +143,17 @@ class Post extends React.Component {
                 <br/>
                 <div className="author-info">
                     <LikeDislike likes={likeDislike} onLike={toggleLike}/>
+                    <span className='span-pa'>
+                    Posted by
                     {
                         pa
                             ? <Link to={`/users/${pa._id}`}>
-                                <span>by {`${pa.firstName} ${pa.lastName}`} at {date.substr(0, 10)}</span>
+                                <span> {`${pa.firstName } ${pa.lastName }`  } </span>
                             </Link>
                             : null
                     }
+                       at { date.substr(0, 10)}
+                       </span>
                 </div>
 
                 <br/>
