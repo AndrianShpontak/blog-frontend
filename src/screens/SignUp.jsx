@@ -37,7 +37,7 @@ class SignUp extends Component {
             .then(() => this.props.history.push('/signIn'))
             .catch((error) => {
                 console.log(error);
-                toast.error('You did not enter all data')
+                toast.error(error.message)
             })
     };
 
