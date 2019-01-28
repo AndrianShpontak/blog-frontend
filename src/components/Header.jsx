@@ -28,13 +28,13 @@ class Header extends React.Component {
                                 </li>
                             </div>
                             <div className="nav-container">
+                                <a href={`/users/${user._id}`}>
+                                    {user.firstName + ' ' + user.lastName}
+                                </a>
                                 <li className="nav-item">
                                     <button className="btn btn-outline-danger" onClick={this.props.logOut}>LogOut
                                     </button>
                                 </li>
-                                <a href={`/users/${user._id}`}>
-                                    {user.firstName + ' ' + user.lastName}
-                                </a>
                             </div>
                         </ul>
                     ) : (
