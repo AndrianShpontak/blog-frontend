@@ -48,6 +48,10 @@ class Posts extends React.Component {
                         }
                     </div>
                 )}
+
+
+
+                <br/>
                 <div>
                     {
                         this.props.posts.map(post => (
