@@ -34,7 +34,7 @@ class SignUp extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
         })
-            .then(() => this.props.history.push('/'))
+            .then(() => this.props.history.push('/signIn'))
             .catch((error) => {
                 console.log(error);
                 toast.error('You did not enter all data')
@@ -90,7 +90,7 @@ class SignUp extends Component {
                 <br/>
                 <br/>
                     <Button type="button" className="btn btn-primary" buttonText='Sign Up'
-                            onButtonClick={this.onButtonClick}/>
+                            onButtonClick={this.onButtonClick} />
 
                 <NavLink to="/signIn">Already have account?</NavLink>
 

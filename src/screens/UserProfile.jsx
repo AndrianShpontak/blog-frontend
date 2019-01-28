@@ -8,7 +8,7 @@ import Post from "../components/Post";
 import Pag from "../components/Pagination";
 import Button from "../components/Button";
 
-import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 
 const ROLES = {
