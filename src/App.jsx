@@ -56,7 +56,7 @@ class App extends Component {
                             <Route path='/forgotPass' component={ForgotPassword} />
                             { user && <Route path='/' component={Posts} exact /> }
                             { user && <Route path='/users/' component={UsersList} exact /> }
-                            { user && <Route path ='/users/verificate' component={Verification} />}
+                            <Route path ='/users/verificate' component={Verification} />
                             { user && <Route path='/users/:id' component={UserProfile} /> }
                             { user && <Route path="/profile/edit" component={EditUserProfile} /> }
                             { user && <Route path="/profile/changePassword" component={ChangeUserPassword} /> }
