@@ -68,11 +68,15 @@ class Posts extends React.Component {
                         ))
                     }
                 </div>
-                <Pag
-                    page={this.state.page}
-                    total={this.props.total}
-                    changeContent={this.changeContent}
-                />
+                {
+                    this.props.posts.length > 10 && (
+                        <Pag
+                            page={this.state.page}
+                            total={this.props.total}
+                            changeContent={this.changeContent}
+                        />
+                    )
+                }
             </div>
         );
     }

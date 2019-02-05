@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom'
 
 import usersService from '../services/users';
 import postsService from '../services/posts';
+import messagesService from '../services/messages';
+import Chat from '../components/Chat'
 import connect from "react-redux/es/connect/connect";
 import Post from "../components/Post";
 import Pag from "../components/Pagination";
@@ -26,8 +28,8 @@ class UserProfile extends Component {
             posts: [],
             isSubscribed: false,
             page: 0,
-            dropdownOpen: false
-
+            dropdownOpen: false,
+            showChat: false
         };
     }
 
@@ -40,6 +42,7 @@ class UserProfile extends Component {
                     user: data
                 });
             });
+
     }
 
     changeContent = (page) => {
@@ -57,6 +60,12 @@ class UserProfile extends Component {
             .then(() => this.setState(prev => ({isSubscribed: !prev.isSubscribed})));
     };
 
+    getMessages = ( receiverId) => {
+        messagesService
+            .getMessages( receiverId);
+        this.setState({showChat: !this.state.showChat})
+    };
+
     render() {
         const {
             props: {
@@ -64,7 +73,8 @@ class UserProfile extends Component {
             },
             state: {
                 posts,
-                user
+                user,
+                showChat
             }
         } = this;
 
@@ -77,11 +87,15 @@ class UserProfile extends Component {
 
         const canSubscribe = user.role === '3' && currentUser._id !== user._id;
 
+        const sendMessage = currentUser._id !== user._id;
+
+
         const canChangeUserInformation = currentUser._id === user._id;
 
 
         return (
             <div className='user-profile'>
+                {showChat && <Chat  receiverId={ user._id}/>}
                 <div className='card'>
                     <div className="card-header">
                         User profile
@@ -123,6 +137,17 @@ class UserProfile extends Component {
                             </button>
                         )
                     }
+                    {
+                        sendMessage && (
+                            <button className='btn btn-primary' onClick={() => this.getMessages()}>
+                                {
+                                    showChat ? 'Close Chat' : 'Open Chat'
+                                }
+                            </button>
+                        )
+                    }
+
+
                 </div>
                 <div>
                     {posts.map(post => {
@@ -142,11 +167,15 @@ class UserProfile extends Component {
                     })
                     }
                 </div>
-                <Pag
-                    page={this.state.page}
-                    total={this.props.total}
-                    changeContent={this.changeContent}
-                />
+                {
+                    posts.length > 10 && (
+                        <Pag
+                            page={this.state.page}
+                            total={this.props.total}
+                            changeContent={this.changeContent}
+                        />
+                    )
+                }
             </div>
 
 

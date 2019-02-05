@@ -36,8 +36,8 @@ class SignUp extends Component {
         })
             .then(() => this.props.history.push('/signIn'))
             .catch((error) => {
-                console.log(error);
-                toast.error(error.message)
+                console.log({...error});
+                toast.error(error.response.data.message)
             })
     };
 

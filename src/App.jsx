@@ -30,7 +30,7 @@ class App extends Component {
             .then(() => {
                 this.setState({ isLoading: false }, () => {
                     if (!this.props.user) {
-                        this.props.history.push('/signIn');
+                        this.props.history.push('/');
                     }
                 });
             })
@@ -51,8 +51,8 @@ class App extends Component {
                     <Header />
                     <div className="content">
                         <Switch>
-                            <Route path='/signIn' component={SignIn} />
                             <Route path='/signUp' component={SignUp} />
+                            <Route path='/signIn' component={SignIn} />
                             <Route path='/forgotPass' component={ForgotPassword} />
                             { user && <Route path='/' component={Posts} exact /> }
                             { user && <Route path='/users/' component={UsersList} exact /> }

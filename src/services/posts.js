@@ -1,5 +1,6 @@
 import axios from 'axios';
 import postsAction from '../actions/posts';
+import authActions from "../actions/auth";
 
 
 /*
@@ -70,6 +71,14 @@ const toggleSubscribe = function (authorId) {
         .post('/subscription/' + authorId)
 };
 
+const editPost = (postId, body) => function (dispatch) {
+    return axios
+        .patch(`/post/update/${postId}`, body)
+        .then(function (res) {
+            dispatch(authActions.setPosts(res.data.updated))
+        })
+};
+
 const getPostsByUserWithLikesAndComments = function ({userId, page = 0, countPerPage = 10} = {}) {
     return axios
         .get(`/post/showPostByUserWithComAndLikes/${userId}?page=${page}&countPerPage=${countPerPage}`)
@@ -85,7 +94,8 @@ export {
     toggleLike,
     getAllComments,
     toggleSubscribe,
-    getPostsByUserWithLikesAndComments
+    getPostsByUserWithLikesAndComments,
+    editPost
 
 };
 export default {
@@ -98,6 +108,7 @@ export default {
     toggleLike,
     getAllComments,
     toggleSubscribe,
-    getPostsByUserWithLikesAndComments
+    getPostsByUserWithLikesAndComments,
+    editPost
 
 };
