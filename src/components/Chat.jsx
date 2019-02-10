@@ -32,13 +32,45 @@ class Chat extends React.Component {
         const {
             room,
             createMessage,
-            receiverId
+            receiverId,
+            author
         } = this.props;
 
         console.log(room);
-        createMessage({body: value, roomId: room._id, receiverId});
-        this.setState({value:''})
+        createMessage({body: value, roomId: room._id, receiverId, author});
+        this.setState({value: ''})
     };
+/*
+    loadMessages = () => {
+        return this.sendMessage()
+            .then(res => {
+                this.setState({
+                    messages: res.data.data ? res.data.data.messages : [],
+                    hasMore: res.data.data.messages.length >= 5
+                })
+            })
+    };
+
+    toggleMessages = () => {
+
+            return this.loadComments();
+
+
+    };*/
+/*
+    loadMore = (page) => {
+        this.sendMessage({
+            page: page,
+            perPage: 5
+        })
+            .then(message => {
+                this.setState((prev) => ({
+                    messages: [...prev.messages, ...res.data.data.messages],
+                    hasMore: room.data.data.messages.length === 5
+                }));
+            });
+
+    };*/
 
     render() {
         const {
@@ -50,22 +82,40 @@ class Chat extends React.Component {
         } = this.props;
 
         return (
-            <div>
-                <h3> {room.name}</h3>
-                <ul>
-                    {
-                        messages.map((message) => {
-                            return (<li key={message._id}>{message.body}</li>)
-                        })
-                    }
-                </ul>
-                <Input
-                    type='text'
-                    label='Write message'
-                    placeholder='write message'
-                    onChange={this.onChangeChatText}
-                    value={value}/>
-                <Button buttonText='send message' onButtonClick={this.sendMessage}/>
+
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-10'>
+                        <div className='card'>
+                            <div className='card-body'>
+                                <div className='card-title'> {room.name}</div>
+                                <hr/>
+                                <div className='messages'>
+                                    {
+                                        messages.map((message) => {
+                                            return (
+                                                <div key={message._id}>{message.senderId.firstName}:{message.body}</div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                                <div className='footer'>
+                                    <
+                                        Input
+                                        type='text'
+                                        label='Write message'
+                                        placeholder='write message'
+                                        onChange={this.onChangeChatText
+                                        }
+                                        value={value}
+                                    />
+                                    <br/>
+                                    <Button buttonText='send message' onButtonClick={this.sendMessage}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -77,7 +127,7 @@ const mapDispatchToProps = function (dispatch) {
         getMessages: function (params) {
             return dispatch(getMessages(params));
         },
-        createMessage:function (params) {
+        createMessage: function (params) {
             return dispatch(createMessage(params));
         }
 

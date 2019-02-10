@@ -12,7 +12,6 @@ import Button from "../components/Button";
 
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
-
 const ROLES = {
     1: 'admin',
     2: 'moderator',
@@ -62,7 +61,7 @@ class UserProfile extends Component {
 
     getMessages = ( receiverId) => {
         messagesService
-            .getMessages( receiverId);
+            .getMessages(    receiverId);
         this.setState({showChat: !this.state.showChat})
     };
 
@@ -192,7 +191,4 @@ const mapState = function (store) {
     }
 };
 
-
 export default connect(mapState)(UserProfile);
-
-
